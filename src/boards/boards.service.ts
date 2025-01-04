@@ -28,14 +28,15 @@ export class BoardsService {
     getBoardById(id: string) :Board {
         const foundBoard = this.boards.find((board) => board.id === id);
         if (!foundBoard) {
-            throw new NotFoundException('Cannnot find board with id ' + id);
+            throw new NotFoundException(`Can't find board with id ${id}`);
         }
 
         return foundBoard;
     }
 
     deleteBoard(id: string) : void {
-        this.boards = this.boards.filter((board) => board.id !== id);
+        const foundBoard = this.getBoardById(id);
+        this.boards = this.boards.filter((board) => board.id !== foundBoard.id);
     }
 
     updateBoardStatus(id: string, status: BoardStatus) : Board {
